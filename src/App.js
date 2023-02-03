@@ -1,7 +1,7 @@
 import React,{useState}from 'react'
 import {Data} from './Components/Data'
 import * as XLSX from 'xlsx'
-
+import InventoryChart from './Components/InventoryChart';
 function aggregateInventoryRecords(records) {
   const result = [];
   const groupedRecords = records.reduce((acc, record) => {
@@ -28,7 +28,21 @@ function aggregateInventoryRecords(records) {
   return result;
 }
 function App() {
+  // const [chartData, setChartData] = useState([{}])
   const [exceldatarecieved, setExcelData]=useState(null);  
+  // useEffect(() => {
+  //   setChartData({
+  //     labels: rowdata.map(item => item.name),
+  //     datasets: [
+  //       {
+  //         label: "Stock vs MRP",
+  //         data:rowdata.map(item => ({ x: item.stock, y: item.mrp })),
+  //         backgroundColor: "rgba(75,192,192,0.4)",
+  //         borderColor: "rgba(75,192,192,1)",
+  //       },
+  //     ],
+  //   });
+  // },[exceldatarecieved]);
   const readExcel=(file)=>{
            const fileReader=new FileReader();
            fileReader.readAsArrayBuffer(file);
@@ -60,7 +74,6 @@ function App() {
 
       <br></br>
       <hr></hr>
-
       {/* view file section */}
       <h5>View Excel file</h5>
       <div className='viewer'>
@@ -85,6 +98,8 @@ function App() {
               </tbody>
             </table>            
           </div>
+          &&
+            <InventoryChart data={exceldatarecieved}/>
         )}       
       </div>
     </div>
