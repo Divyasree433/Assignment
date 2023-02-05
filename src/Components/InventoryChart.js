@@ -1,57 +1,36 @@
-import React,{useState,useEffect} from 'react'
-import { Line } from 'react-chartjs-2';
-function InventoryChart(props) {
-    const [data, setData] = useState({});
+import React, { useState, useEffect } from "react";
+import {
+  LineChart,
+  ResponsiveContainer,
+  Legend, Tooltip,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid
+} from 'recharts';
 
-    const chartData = {
-      labels: [],
-      datasets: [
-        {
-          label: 'Stock vs MRP',
-          data: [],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.6)',
-            'rgba(54, 162, 235, 0.6)',
-          ],
-          borderWidth: 1,
-          borderColor: '#777',
-          hoverBorderWidth: 3,
-          hoverBorderColor: '#000'
-        }
-      ]
-    };
-  
-    useEffect(() => {
-      props.data.forEach(item => {
-        chartData.labels.push(item.batch);
-        chartData.datasets[0].data.push({ x: item.stock, y: item.mrp });
-      });
-      setData(chartData);
-    }, [props.data]);
-  
-    return (
-      <div className="chart">
-        <Line
-          data={data}
-          options={{
-            title: {
-              display: true,
-              text: 'Stock vs MRP',
-              fontSize: 25
-            },
-            legend: {
-              display: true,
-              position: 'right'
-            },
-            scales: {
-              xAxes: [{
-                type: 'linear',
-                position: 'bottom'
-              }]
-            }
-          }}
-        />
-      </div>
-    );
-  };
+function InventoryChart({arr}) {
+  return (
+    <>
+            <h1 className="text-heading">
+                Line Chart
+            </h1>
+            <ResponsiveContainer width="100%" aspect={3}>
+                <LineChart data={arr} margin={{ right: 50 }}>
+                    <CartesianGrid />
+                    <XAxis dataKey="name" 
+                        interval={'preserveStartEnd'} />
+                    <YAxis></YAxis>
+                    <Legend />
+                    <Tooltip />
+                    <Line dataKey="rate"
+                        stroke="black" activeDot={{ r: 8 }} />
+                    <Line dataKey="fees"
+                        stroke="red" activeDot={{ r: 8 }} />
+                </LineChart>
+            </ResponsiveContainer>
+        </>
+  )
+}
+
 export default InventoryChart
