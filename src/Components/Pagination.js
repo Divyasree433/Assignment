@@ -65,7 +65,7 @@ const Pagination = ({aggreagtedarray}) =>
           }
         </ul>
         </nav>
-        {isvalid&&<InventoryChart arr={aggreagtedarray}/>} 
+        {isvalid && <InventoryChart arr={aggreagtedarray}/>} 
       </div>
      );
 };
