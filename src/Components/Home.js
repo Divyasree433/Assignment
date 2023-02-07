@@ -8,6 +8,7 @@ export default function Home(){
         const rows = str.slice(str.indexOf('\n')+1).split('\n');
         const newArray = rows.map( row => {
             const values = row.split(delim);
+            console.log(values);
             const eachObject = headers.reduce((obj, header, i) => {
                 obj[header] = values[i];
                 return obj;
@@ -23,6 +24,7 @@ export default function Home(){
 
         reader.onload = function(e) {
             const text = e.target.result;
+            console.log(text);
             processCSV(text)
         }
 
@@ -30,9 +32,6 @@ export default function Home(){
     }
     return(
         <>
-        {/* <div>
-            <InventoryChart data={csvArray}/>
-        </div> */}
         <form id='csv-form'>
             <input
                 className='form-control'

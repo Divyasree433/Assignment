@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   LineChart,
   ResponsiveContainer,
@@ -18,15 +18,14 @@ function InventoryChart({arr}) {
             <ResponsiveContainer width="100%" aspect={3}>
                 <LineChart data={arr} margin={{ right: 50 }}>
                     <CartesianGrid />
-                    <XAxis dataKey="name" 
-                        interval={'preserveStartEnd'} />
+                    <XAxis dataKey="name" />
                     <YAxis></YAxis>
                     <Legend />
                     <Tooltip />
                     <Line dataKey="rate"
                         stroke="black" activeDot={{ r: 8 }} />
-                    <Line dataKey="fees"
-                        stroke="red" activeDot={{ r: 8 }} />
+                    <Line dataKey="mrp"
+                        stroke="orange" activeDot={{ r: 8 }} />
                 </LineChart>
             </ResponsiveContainer>
         </>

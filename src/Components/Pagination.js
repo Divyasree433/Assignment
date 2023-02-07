@@ -3,22 +3,25 @@ import InventoryChart from "./InventoryChart";
 const Pagination = ({aggreagtedarray}) => 
 {
   const [currentPage, setCurrentPage] = useState(1);
-  const [dataPerPage, setDataPerPage] = useState(20);
-
-  // Get current data
+  const [dataPerPage, setDataPerPage] = useState(100);
+  let isvalid=false;
+  //used to get current data
   const indexOfLastData = currentPage * dataPerPage;
   const indexOfFirstData = indexOfLastData - dataPerPage;
+  if(aggreagtedarray.length>0)
+  isvalid=true;
   const currentData = aggreagtedarray.slice(indexOfFirstData, indexOfLastData);
-  console.log(aggreagtedarray)
-  // Change page
+  // changing the page number
   const paginate = pageNumber => setCurrentPage(pageNumber);
-
+  //Adding no of pagenumber may be present
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(aggreagtedarray.length / dataPerPage); i++) {
     pageNumbers.push(i);
   }
   return (   
-    <div>
+    <div className="table-responsive">
+      {/*displaying table of aggreagtedarray*/}
+      {isvalid ?
       <table className="table">
         <thead>
           <tr>
@@ -33,7 +36,7 @@ const Pagination = ({aggreagtedarray}) =>
           </tr>
         </thead>
         <tbody>
-        {currentData.map(item => (
+          {currentData.map(item => (
             <tr>
               <td>{item.name}</td>
               <td>{item.batch}</td>
@@ -44,21 +47,25 @@ const Pagination = ({aggreagtedarray}) =>
               <td>{item.rate}</td>
               <td>{item.exp}</td>
             </tr>
-          ))}
+          ))
+         } 
         </tbody>
         </table>
+        :<h2 className="text-danger text-center">No data found</h2>}
         <nav>
         <ul className="pagination">
-          {pageNumbers.map(number => (
+          {
+          pageNumbers.map(number => (
             <li key={number} className={number === currentPage ? "page-item active" : "page-item"}>
                 <a href="#!" onClick={() => paginate(number)} className="page-link">
                 {number}
               </a>
             </li>
-          ))}
+          ))
+          }
         </ul>
         </nav>
-        <InventoryChart arr={aggreagtedarray}/> 
+        {isvalid&&<InventoryChart arr={aggreagtedarray}/>} 
       </div>
      );
 };
