@@ -1,34 +1,47 @@
-import { useState } from 'react'
-import Singlerow from './Singlerow';
+import { useEffect, useState } from 'react'
+import Pagination from './SearchBy';
 export default function Home(){
     const [csvFile, setCsvFile] = useState();
     const [csvArray, setCsvArray] = useState([]);
+    const [productGroups, setProductGroups] = useState({});
     const processCSV = (str, delim=',') => {
         const headers = str.slice(0,str.indexOf('\n')).split(delim);
         const rows = str.slice(str.indexOf('\n')+1).split('\n');
         const newArray = rows.map( row => {
             const values = row.split(delim);
-            console.log(values);
             const eachObject = headers.reduce((obj, header, i) => {
                 obj[header] = values[i];
                 return obj;
             }, {})
-            return eachObject;
+            return eachObject;    
         })
         setCsvArray(newArray)
     }
-
+    const parseCSV = (csvArray) => {
+        let groupedProducts = {};
+        for (let i = 0; i < csvArray.length; i++) {
+          let productName = csvArray[i].name;
+          if (!groupedProducts[productName]) {
+            groupedProducts[productName] = [];
+          }
+          groupedProducts[productName].push(csvArray[i]);
+        }
+        setProductGroups(groupedProducts);
+    }
+    useEffect(()=>{
+        parseCSV(csvArray);
+    },[csvArray])
     const submit = () => {
         const file = csvFile;
         const reader = new FileReader();
 
         reader.onload = function(e) {
             const text = e.target.result;
-            console.log(text);
             processCSV(text)
         }
-
+        
         reader.readAsText(file);
+        
     }
     return(
         <>
@@ -57,7 +70,7 @@ export default function Home(){
             <br/>
             <br/>
             {csvArray.length>0?
-            <Singlerow csvArray={csvArray}/>:<p className='text-center bg-secondary text-white'>
+            <Pagination productGroups={productGroups}/>:<p className='text-center bg-secondary text-white'>
                 No file selected</p>}
         </form>
         </>

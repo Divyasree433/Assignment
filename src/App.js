@@ -1,7 +1,7 @@
 import React from 'react'
-import Home from './Components/Home'
+import Input from './Components/Input'
 function App() {
-  return <Home/>
+  return <Input/>
 }
 
 export default App;
