@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import _ from "lodash";
-
+import '../CSSfiles/EachRow.css'
 const EachRow = (props) => {
   const productBatches = props.item[1];
+  console.log(productBatches);
   const batchesList = ["All"];
   const [selectedBatch, setSelectedBatch] = useState("All");
 
@@ -11,6 +12,8 @@ const EachRow = (props) => {
       batchesList.push(temp["batch"]);
     }
   }
+  console.log(batchesList);
+  
   const dropdownHandler = (event) => {
     setSelectedBatch(event.target.value);
   };
@@ -29,24 +32,24 @@ const EachRow = (props) => {
   if (selectedBatch === "All") {
     return (
       <tr>
-        <td>{props.item[0]}</td>
-        <td>
+        <td className="name">{props.item[0]}</td>
+        <td className="batches">
           <select
-            className="btn btn-secondary dropdown-toggle"
+            className="btn btn-secondary dropdown-toggle "
             onChange={dropdownHandler}
-            value="All"
-          >
+            defaultValue="All"
+           >
             {batchesList.map((batchId) => (
               <option key={Math.random().toString()}>{batchId}</option>
             ))}
           </select>
         </td>
-        <td>{_.sumBy(productBatches,function(o) { return +(o.stock); })}</td>
-        <td>{deal}</td>
-        <td>{free}</td>
-        <td>{_.maxBy(productBatches, "mrp").mrp}</td>
-        <td>{_.maxBy(productBatches, "rate").rate}</td>
-        <td>{_.minBy(productBatches, "exp").exp}</td>
+        <td className="stock">{_.sumBy(productBatches,function(o) { return +(o.stock); })}</td>
+        <td className="deal">{deal}</td>
+        <td className="free">{free}</td>
+        <td className="mrp">{_.maxBy(productBatches, "mrp").mrp}</td>
+        <td className="rate">{_.maxBy(productBatches, "rate").rate}</td>
+        <td className="exp">{_.minBy(productBatches, "exp").exp}</td>
       </tr>
     );
   } else {
@@ -67,12 +70,12 @@ const EachRow = (props) => {
             ))}
           </select>
         </td>
-        <td >{_.sumBy(requiredRow, "stock")}</td>
-        <td >{_.sumBy(requiredRow, "deal")}</td>
-        <td >{_.sumBy(requiredRow, "free")}</td>
-        <td >{_.maxBy(requiredRow, "mrp").mrp}</td>
-        <td >{_.maxBy(requiredRow, "rate").rate}</td>
-        <td >{_.minBy(requiredRow, "exp").exp}</td>
+        <td className="stock">{_.sumBy(requiredRow,function(o) { return +(o.stock)})}</td>
+        <td className="deal">{_.sumBy(requiredRow, "deal")}</td>
+        <td className="free">{_.sumBy(requiredRow, "free")}</td>
+        <td className="mrp">{_.maxBy(requiredRow, "mrp").mrp}</td>
+        <td className="rate">{_.maxBy(requiredRow, "rate").rate}</td>
+        <td className="exp">{_.minBy(requiredRow, "exp").exp}</td>
       </tr>
     );
   }

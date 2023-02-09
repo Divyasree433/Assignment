@@ -1,6 +1,6 @@
 import React, { useState,useEffect} from 'react';
-import _ from "lodash"
 import RequiredRows from './RequiredRows'
+import '../CSSfiles/SearchBy.css'
 function Pagination({productGroups}){
   const groupsList = Object.entries(productGroups)
   const [searchWord, setSearchWord] = useState("");
@@ -22,8 +22,8 @@ function Pagination({productGroups}){
   return (
     <div>
       {productGroups.length !== 0 && (
-        <div>
-          <input
+        <div style={{margin:"5px"}}>
+          <input 
             className="form-control"
             type="text"
             onChange={searchHandler}

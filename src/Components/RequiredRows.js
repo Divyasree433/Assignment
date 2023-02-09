@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import EachRow from './EachRow'
+import '../CSSfiles/RequiredRow.css'
 const Rows = (props) => {
   const data = props.groupsList;
   const [currentItems, setCurrentItems] = useState();
@@ -19,7 +20,7 @@ const Rows = (props) => {
   };
   return (
     <>
-      <div>
+      <div className="pagination">
         {data.length !== 0 && (
           <table className="table mb-0">
             <tbody>

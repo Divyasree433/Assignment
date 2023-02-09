@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Pagination from './SearchBy';
+import '../CSSfiles/Input.css'
 export default function Home(){
     const [csvFile, setCsvFile] = useState();
     const [csvArray, setCsvArray] = useState([]);
@@ -45,12 +46,13 @@ export default function Home(){
     }
     return(
         <>
-        <form id='csv-form'>
+        <div className='upload-heading'>Upload a file</div>
+        <form>
             <input
-                className='form-control'
+                className='form-control input-container'
                 type='file'
                 accept='.csv'
-                id='csvFile'
+                id='excel-file'
                 onChange={(e) => {
                     setCsvFile(e.target.files[0])
                 }}
